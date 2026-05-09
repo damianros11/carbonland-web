@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARBONLAND — Compensa tu Huella de Carbono</title>
+<meta name="description" content="La plataforma que conecta empresas con compromisos Net Zero con proyectos de carbono certificados en Paraguay. Créditos Verra. Contratos a largo plazo.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@200;300;400;500;600;700&family=Lora:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #0e0c07;
+  --bark:  #1a1409;
+  --deep:  #241c0a;
+  --gold:  #c47c2b;
+  --gold2: #e8c98a;
+  --gold3: #f5e8c0;
+  --cream: #f0ece0;
+  --mist:  #b8c8a8;
+  --white: #fdfaf3;
+  --leaf:  #2d4a1e;
+  --moss:  #6aaa50;
+  --jade:  #2a6b5a;
+  --red:   #8b2d2d;
+  --border: rgba(196,124,43,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.6}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.4rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(14,12,7,.97),transparent);backdrop-filter:blur(4px)}
+.nav-brand{display:flex;align-items:center;gap:.9rem}
+.nav-sym{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--gold)}
+.nav-logo{font-weight:700;font-size:.95rem;letter-spacing:.45em;color:var(--gold);text-transform:uppercase}
+.nav-sub{font-size:.55rem;letter-spacing:.2em;color:var(--mist);opacity:.5}
+.nav-cta{font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;font-weight:600;
+  color:var(--gold);border:1px solid rgba(196,124,43,.4);padding:.5rem 1.2rem;
+  cursor:pointer;transition:all .3s;background:none;text-decoration:none}
+.nav-cta:hover{background:var(--gold);color:var(--bg)}
+
+.div{height:1px;background:linear-gradient(to right,transparent,rgba(196,124,43,.18),transparent)}
+
+.s-lbl{font-size:.5rem;letter-spacing:.5em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:.8rem}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,4.8rem);font-weight:400;line-height:1.05;color:var(--white)}
+.s-title em{font-style:italic;color:var(--gold)}
+.s-body{font-size:.92rem;line-height:1.85;color:var(--mist)}
+.s-quote{font-family:'Lora',serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.7rem);
+  color:var(--cream);border-left:2px solid var(--gold);padding-left:1.8rem;line-height:1.5;margin:2rem 0}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 3rem 7rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 55% 40%,rgba(45,74,30,.22) 0%,transparent 65%),
+             radial-gradient(ellipse 50% 50% at 10% 90%,rgba(42,107,90,.15) 0%,transparent 55%),
+             linear-gradient(170deg,var(--bg) 0%,var(--bark) 50%,var(--bg) 100%)}
+.mandala{position:absolute;top:50%;right:-5%;transform:translateY(-50%);
+  width:55vw;height:55vw;opacity:.035;animation:spin 160s linear infinite}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+.hero-inner{position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end}
+.hero-eyebrow{font-size:.52rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;
+  font-weight:600;margin-bottom:1.5rem;opacity:0;animation:riseIn 1.2s ease .3s forwards}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(4rem,8vw,9.5rem);
+  font-weight:300;line-height:.88;color:var(--white);opacity:0;animation:riseIn 1.2s ease .5s forwards}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-tagline{font-family:'Lora',serif;font-style:italic;font-size:clamp(.95rem,1.6vw,1.25rem);
+  color:var(--mist);margin-top:2rem;line-height:1.75;max-width:480px;
+  opacity:0;animation:riseIn 1.2s ease .7s forwards}
+.hero-line{width:60px;height:2px;background:linear-gradient(to right,var(--gold),transparent);
+  margin:2rem 0;opacity:0;animation:riseIn 1.2s ease .9s forwards}
+.hero-nums{display:flex;gap:3rem;opacity:0;animation:riseIn 1.2s ease 1.1s forwards;flex-wrap:wrap}
+.hero-num-val{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);line-height:1}
+.hero-num-lbl{font-size:.5rem;letter-spacing:.3em;color:var(--mist);text-transform:uppercase;margin-top:.25rem}
+.hero-pillars{opacity:0;animation:riseIn 1.2s ease 1.3s forwards}
+.pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px}
+.pillar{background:rgba(255,255,255,.02);border:1px solid rgba(196,124,43,.1);padding:1.3rem}
+.pillar-ico{font-size:1.2rem;margin-bottom:.5rem}
+.pillar-ttl{font-size:.52rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:.3rem}
+.pillar-txt{font-size:.75rem;color:var(--mist);opacity:.8;line-height:1.5}
+.pillar.wide{grid-column:1/-1}
+
+/* ── PROBLEMA CLIENTE ── */
+.prob{background:linear-gradient(180deg,var(--bg),var(--bark));padding:9rem 3rem}
+.prob-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:6rem;align-items:start}
+.prob-cards{display:flex;flex-direction:column;gap:2px}
+.pcard{background:rgba(255,255,255,.02);border:1px solid rgba(196,124,43,.12);padding:2rem 1.8rem;
+  position:relative;overflow:hidden;transition:all .35s}
+.pcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--gold);opacity:0;transition:opacity .3s}
+.pcard:hover{background:rgba(196,124,43,.05)}
+.pcard:hover::before{opacity:1}
+.pcard-ico{font-size:1.4rem;margin-bottom:.7rem}
+.pcard-ttl{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--gold2);margin-bottom:.6rem}
+.pcard-txt{font-size:.82rem;color:var(--mist);line-height:1.7;opacity:.9}
+
+/* ── SERVICIO / CÓMO FUNCIONA ── */
+.service{background:var(--bark);padding:9rem 3rem}
+.service-inner{max-width:1300px;margin:0 auto}
+.service-head{display:grid;grid-template-columns:1fr 1.8fr;gap:4rem;margin-bottom:4.5rem;align-items:end}
+.steps{display:flex;flex-direction:column;gap:2px}
+.step{display:grid;grid-template-columns:64px 1fr;border:1px solid rgba(196,124,43,.1);
+  background:rgba(255,255,255,.018);transition:all .3s}
+.step:hover{background:rgba(196,124,43,.06);border-color:rgba(196,124,43,.3)}
+.step-num{display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:2rem;font-style:italic;
+  opacity:.3;color:var(--gold);border-right:1px solid rgba(255,255,255,.04)}
+.step-content{padding:1.6rem 1.8rem}
+.step-ttl{font-size:.52rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.3rem}
+.step-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--white);margin-bottom:.4rem}
+.step-desc{font-size:.8rem;color:var(--mist);line-height:1.6;opacity:.85}
+
+/* ── QUÉ RECIBES ── */
+.benefits{background:linear-gradient(180deg,var(--bark),var(--leaf));padding:9rem 3rem}
+.benefits-inner{max-width:1300px;margin:0 auto}
+.benefits-head{display:grid;grid-template-columns:1fr 2fr;gap:5rem;margin-bottom:4.5rem;align-items:end}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.bc{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.06);padding:2.5rem 1.8rem;
+  position:relative;transition:all .35s}
+.bc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
+.bc:hover{background:rgba(0,0,0,.38);transform:translateY(-4px)}
+.bc:hover::before{opacity:1}
+.bc1::before{background:linear-gradient(to right,var(--jade),var(--moss))}
+.bc2::before{background:linear-gradient(to right,var(--gold),var(--gold2))}
+.bc3::before{background:linear-gradient(to right,#5a7a9a,#90b0d0)}
+.bc4::before{background:linear-gradient(to right,var(--moss),#a0d080)}
+.bc5::before{background:linear-gradient(to right,var(--jade),var(--gold))}
+.bc6::before{background:linear-gradient(to right,#9a7040,var(--gold2))}
+.bc-ico{font-size:1.8rem;margin-bottom:1rem}
+.bc-ttl{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--gold2);margin-bottom:.2rem}
+.bc-cat{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.9rem}
+.bc-txt{font-size:.82rem;color:var(--mist);line-height:1.65;opacity:.88}
+
+/* ── ZONAS ── */
+.zones{background:var(--bg);padding:9rem 0}
+.zones-head{max-width:1300px;margin:0 auto;padding:0 3rem 4.5rem;
+  display:grid;grid-template-columns:1fr 1.8fr;gap:4rem;align-items:end}
+.zones-grid{max-width:1300px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.zc{border:1px solid rgba(196,124,43,.12);background:rgba(255,255,255,.018);padding:3rem 2.5rem;transition:all .3s}
+.zc:hover{background:rgba(196,124,43,.05);border-color:rgba(196,124,43,.3)}
+.zc-flag{font-size:2.5rem;margin-bottom:1rem}
+.zc-country{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;font-weight:600;margin-bottom:.4rem}
+.zc-name{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--white);margin-bottom:1.2rem}
+.zc-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.4rem}
+.zc-tag{font-size:.6rem;padding:.18rem .6rem;background:rgba(106,170,80,.12);
+  border:1px solid rgba(106,170,80,.2);color:var(--moss);border-radius:2px}
+.zc-row{display:flex;justify-content:space-between;padding:.55rem 0;
+  border-bottom:1px solid rgba(255,255,255,.05);font-size:.8rem}
+.zc-row span:first-child{color:var(--mist)}
+.zc-row span:last-child{color:var(--gold2);font-family:'Playfair Display',serif}
+
+/* ── CERTIFICACIÓN ── */
+.cert{background:var(--bark);padding:9rem 3rem}
+.cert-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:center}
+.cert-logos{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.cert-card{background:rgba(255,255,255,.02);border:1px solid rgba(196,124,43,.15);
+  padding:2rem;text-align:center;transition:all .3s}
+.cert-card:hover{background:rgba(196,124,43,.05)}
+.cert-card-ico{font-size:2rem;margin-bottom:.8rem}
+.cert-card-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold2);margin-bottom:.3rem}
+.cert-card-desc{font-size:.75rem;color:var(--mist);line-height:1.55;opacity:.8}
+
+/* ── PRECIOS / CONTRATO ── */
+.pricing{background:linear-gradient(180deg,var(--bg),var(--bark));padding:9rem 3rem}
+.pricing-inner{max-width:1300px;margin:0 auto}
+.pricing-head{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;margin-bottom:4.5rem;align-items:center}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.pc-card{border:1px solid rgba(196,124,43,.15);padding:3rem 2rem;
+  background:rgba(255,255,255,.015);position:relative;transition:all .35s}
+.pc-card.feat{border-color:rgba(196,124,43,.5);background:rgba(196,124,43,.07)}
+.pc-card.feat::before{content:'✦ MÁS ELEGIDO';position:absolute;top:-1px;left:50%;
+  transform:translateX(-50%);background:var(--gold);color:var(--bg);
+  font-size:.44rem;letter-spacing:.35em;padding:.3rem 1.2rem;font-weight:700;white-space:nowrap}
+.pc-card:hover{transform:translateY(-3px)}
+.pc-name{font-size:.52rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:1rem}
+.pc-price{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--white);line-height:1}
+.pc-price sup{font-size:1.2rem;vertical-align:super;color:var(--gold)}
+.pc-per{font-size:.73rem;color:var(--mist);opacity:.55;margin:.3rem 0 1.5rem}
+.pc-hr{height:1px;background:rgba(196,124,43,.2);margin:1.5rem 0}
+.pc-feats{list-style:none}
+.pc-feats li{padding:.52rem 0;font-size:.8rem;color:var(--mist);
+  display:flex;align-items:flex-start;gap:.65rem;
+  border-bottom:1px solid rgba(255,255,255,.04);line-height:1.4}
+.pc-feats li::before{content:'◦';color:var(--gold);opacity:.7;font-size:.7rem;margin-top:.15rem;flex-shrink:0}
+.pc-btn{display:block;margin-top:2rem;padding:.9rem;text-align:center;
+  font-size:.52rem;letter-spacing:.4em;text-transform:uppercase;font-weight:600;
+  border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all .3s;text-decoration:none}
+.pc-card.feat .pc-btn{background:var(--gold);color:var(--bg)}
+.pc-btn:hover{background:var(--gold);color:var(--bg)}
+
+/* ── CALCULADORA ── */
+.calc{background:var(--leaf);padding:9rem 3rem}
+.calc-inner{max-width:1300px;margin:0 auto}
+.calc-head{display:grid;grid-template-columns:1fr 2fr;gap:5rem;margin-bottom:4.5rem;align-items:end}
+.calc-box{background:rgba(0,0,0,.25);border:1px solid rgba(196,124,43,.2);padding:3rem}
+.calc-form{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.calc-field{display:flex;flex-direction:column;gap:.5rem}
+.calc-field label{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.calc-field input,.calc-field select{background:rgba(255,255,255,.05);border:1px solid rgba(196,124,43,.2);
+  color:var(--white);padding:.75rem 1rem;font-family:'Raleway',sans-serif;font-size:.85rem;outline:none;
+  transition:border-color .3s}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--gold)}
+.calc-field select option{background:var(--bark)}
+.calc-results{background:rgba(196,124,43,.08);border:1px solid rgba(196,124,43,.25);padding:2rem;margin-top:2rem}
+.calc-results-title{font-size:.48rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:1.2rem}
+.calc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ckpi-val{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);line-height:1;margin-bottom:.2rem}
+.ckpi-lbl{font-size:.44rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);opacity:.6;line-height:1.4}
+.calc-cta{margin-top:1.5rem}
+.calc-cta-btn{display:inline-block;padding:1rem 2.5rem;background:var(--gold);color:var(--bg);
+  font-size:.54rem;letter-spacing:.4em;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;
+  transition:all .3s;text-decoration:none}
+.calc-cta-btn:hover{background:var(--gold2)}
+
+/* ── FAQ ── */
+.faq{background:var(--bg);padding:9rem 3rem}
+.faq-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1.8fr;gap:6rem}
+.faq-list{display:flex;flex-direction:column;gap:2px}
+.faq-item{border:1px solid rgba(196,124,43,.12);overflow:hidden;transition:border-color .3s}
+.faq-item:hover{border-color:rgba(196,124,43,.3)}
+.faq-q{padding:1.4rem 1.8rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  font-size:.88rem;color:var(--gold2);user-select:none}
+.faq-q::after{content:'+';font-size:1.2rem;color:var(--gold);opacity:.6;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{padding:0 1.8rem 1.4rem;font-size:.82rem;color:var(--mist);line-height:1.75;opacity:.88}
+
+/* ── PROCESO DE CONTRATACIÓN ── */
+.process{background:linear-gradient(180deg,var(--bg),var(--bark));padding:9rem 3rem}
+.process-inner{max-width:1300px;margin:0 auto}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:4rem}
+.ps{background:rgba(255,255,255,.015);border:1px solid rgba(196,124,43,.1);padding:2.2rem 1.7rem;transition:all .35s}
+.ps:hover{background:rgba(196,124,43,.05);transform:translateY(-3px)}
+.ps-n{font-family:'Playfair Display',serif;font-size:3rem;font-style:italic;color:var(--gold);opacity:.35;margin-bottom:.8rem}
+.ps-ttl{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.5rem}
+.ps-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);margin-bottom:.6rem}
+.ps-desc{font-size:.78rem;color:var(--mist);line-height:1.65;opacity:.85}
+
+/* ── CIERRE ── */
+.cierre{background:var(--bg);padding:10rem 3rem;text-align:center;position:relative;overflow:hidden}
+.cierre-orb{position:absolute;width:60vw;height:60vw;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(45,74,30,.12) 0%,transparent 70%);pointer-events:none}
+.cierre-inner{position:relative;z-index:1;max-width:720px;margin:0 auto}
+.cierre-sym{font-size:2rem;display:block;margin-bottom:2rem;letter-spacing:.5em;color:var(--gold);opacity:.5}
+.cierre-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,7rem);
+  font-weight:300;line-height:.95;color:var(--white);margin-bottom:1.5rem}
+.cierre-title em{font-style:italic;color:var(--gold)}
+.cierre-desc{font-family:'Lora',serif;font-style:italic;font-size:1.1rem;
+  color:var(--mist);line-height:1.75;margin-bottom:3.5rem;opacity:.85}
+.cierre-btn{display:inline-block;padding:1.2rem 3.5rem;border:1px solid var(--gold);
+  font-size:.56rem;letter-spacing:.45em;text-transform:uppercase;font-weight:600;
+  color:var(--gold);cursor:pointer;transition:all .4s;position:relative;overflow:hidden;background:none;text-decoration:none}
+.cierre-btn::after{content:'';position:absolute;inset:0;background:var(--gold);
+  transform:translateX(-101%);transition:transform .4s;z-index:-1}
+.cierre-btn:hover{color:var(--bg)}
+.cierre-btn:hover::after{transform:translateX(0)}
+.cierre-foot{margin-top:3.5rem;font-size:.46rem;letter-spacing:.38em;color:var(--mist);opacity:.22}
+
+footer{background:rgba(0,0,0,.5);border-top:1px solid rgba(196,124,43,.1);
+  padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.f-brand{font-size:.75rem;letter-spacing:.35em;color:var(--gold);font-weight:700}
+.f-note{font-size:.62rem;color:var(--mist);opacity:.28}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{font-size:.58rem;color:var(--mist);opacity:.4;text-decoration:none;letter-spacing:.1em;transition:opacity .3s}
+.f-links a:hover{opacity:.8}
+
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:1100px){
+  .hero-inner,.prob-inner,.service-head,.benefits-head,.zones-head,.cert-inner,
+  .pricing-head,.calc-head,.faq-inner,.process-steps{grid-template-columns:1fr;gap:2.5rem}
+  .hero-pillars{display:none}
+  .benefits-grid,.pricing-cards,.process-steps{grid-template-columns:1fr 1fr}
+  .zones-grid,.cert-logos{grid-template-columns:1fr}
+  .calc-form{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  nav,.hero,.prob,.service,.benefits,.zones,.cert,.pricing,.calc,.faq,.process,.cierre
+  {padding-left:1.5rem;padding-right:1.5rem}
+  .hero{padding-bottom:4rem}
+  .benefits-grid,.pricing-cards,.calc-kpis{grid-template-columns:1fr}
+  .calc-form{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-sym">🌿</div>
+    <div>
+      <div class="nav-logo">CARBONLAND</div>
+      <div class="nav-sub">Carbon Credit Platform</div>
+    </div>
+  </div>
+  <a href="#contacto" class="nav-cta">Solicitar propuesta</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <svg class="mandala" viewBox="0 0 500 500" fill="none" stroke="rgba(196,124,43,1)" stroke-width=".6">
+    <circle cx="250" cy="250" r="230"/><circle cx="250" cy="250" r="190"/>
+    <circle cx="250" cy="250" r="145"/><circle cx="250" cy="250" r="100"/>
+    <circle cx="250" cy="250" r="55"/><circle cx="250" cy="250" r="20"/>
+    <line x1="250" y1="20" x2="250" y2="480"/><line x1="20" y1="250" x2="480" y2="250"/>
+    <line x1="87" y1="87" x2="413" y2="413"/><line x1="413" y1="87" x2="87" y2="413"/>
+    <polygon points="250,35 465,370 35,370" fill="none"/>
+    <polygon points="250,465 35,130 465,130" fill="none"/>
+  </svg>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Créditos de Carbono Certificados · Paraguay · Verra VCS</div>
+      <h1 class="hero-title">CARBON<em>LAND</em></h1>
+      <p class="hero-tagline">Compensa la huella de carbono de tu empresa con créditos verificados, contratos a largo plazo y reportes ESG automatizados. Real, medible y certificado.</p>
+      <div class="hero-line"></div>
+      <div class="hero-nums">
+        <div><div class="hero-num-val">Verra</div><div class="hero-num-lbl">Certificación</div></div>
+        <div><div class="hero-num-val">20–25a</div><div class="hero-num-lbl">Contratos</div></div>
+        <div><div class="hero-num-val">Paraguay</div><div class="hero-num-lbl">Proyectos</div></div>
+        <div><div class="hero-num-val">CSRD</div><div class="hero-num-lbl">Compatible</div></div>
+      </div>
+    </div>
+    <div class="hero-pillars">
+      <div class="pillars-grid">
+        <div class="pillar"><div class="pillar-ico">✅</div><div class="pillar-ttl">Créditos verificados</div><div class="pillar-txt">Emitidos bajo estándar Verra VCS + CCB. Registrados internacionalmente. Trazables.</div></div>
+        <div class="pillar"><div class="pillar-ico">📄</div><div class="pillar-ttl">Contrato a medida</div><div class="pillar-txt">Precio fijo garantizado. Sin sorpresas. Sin fluctuaciones de mercado spot.</div></div>
+        <div class="pillar"><div class="pillar-ico">📊</div><div class="pillar-ttl">Reportes ESG</div><div class="pillar-txt">Automatizados y compatibles con CSRD, GHG Protocol, GRI y CDP.</div></div>
+        <div class="pillar"><div class="pillar-ico">🌿</div><div class="pillar-ttl">Impacto real</div><div class="pillar-txt">Bosque nativo conservado. Captura verificada. Coordenadas GPS. Fotos satelitales.</div></div>
+        <div class="pillar wide"><div class="pillar-ico">🔒</div><div class="pillar-ttl">Precio garantizado · Sin riesgo de mercado</div><div class="pillar-txt">Tu empresa fija el precio por tonelada de CO₂ en el contrato. No dependes de la volatilidad del mercado voluntario. Planificación financiera ESG segura para los próximos 20–25 años.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ EL PROBLEMA DE TU EMPRESA ══ -->
+<div class="prob">
+  <div class="prob-inner">
+    <div>
+      <div class="s-lbl">Tu situación</div>
+      <h2 class="s-title">Tu empresa<br>necesita<br><em>actuar ya</em></h2>
+      <div class="s-quote">"La regulación ESG no espera. Tus compromisos Net Zero tampoco."</div>
+      <p class="s-body">CSRD, SBTi, el Acuerdo de París y tus propios inversores exigen resultados medibles, no promesas. CarbonLand te ofrece la solución más sólida del mercado: créditos de carbono verificados, con precio fijo, de proyectos reales con coordenadas GPS — no intermediarios, no promesas vagas.</p>
+    </div>
+    <div>
+      <div class="s-lbl" style="margin-bottom:1.5rem">Los tres problemas que resolvemos</div>
+      <div class="prob-cards">
+        <div class="pcard fade-in">
+          <div class="pcard-ico">📋</div>
+          <div class="pcard-ttl">Obligaciones ESG cada vez más estrictas</div>
+          <div class="pcard-txt">La directiva CSRD obliga a empresas europeas a reportar emisiones con detalle creciente desde 2024. SBTi y los compromisos Net Zero requieren compensaciones verificables. La multa por incumplimiento no es solo económica — es reputacional.</div>
+        </div>
+        <div class="pcard fade-in">
+          <div class="pcard-ico">🎲</div>
+          <div class="pcard-ttl">Mercado de carbono volátil e incierto</div>
+          <div class="pcard-txt">El mercado voluntario fluctúa. Los precios suben, la calidad varía y los créditos de baja calidad generan riesgo reputacional (greenwashing). Tu empresa necesita certeza, no exposición al mercado spot.</div>
+        </div>
+        <div class="pcard fade-in">
+          <div class="pcard-ico">🔍</div>
+          <div class="pcard-ttl">Falta de trazabilidad y credibilidad</div>
+          <div class="pcard-txt">Tus accionistas, clientes y reguladores exigen evidencia real: coordenadas del proyecto, verificación independiente, número de serie en el registro Verra. Los créditos genéricos ya no bastan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ CÓMO FUNCIONA (VISTA CLIENTE) ══ -->
+<div class="service">
+  <div class="service-inner">
+    <div class="service-head">
+      <div>
+        <div class="s-lbl">El Servicio</div>
+        <h2 class="s-title">Simple,<br>seguro,<br><em>certificado</em></h2>
+      </div>
+      <p class="s-body">CarbonLand gestiona todo el proceso — desde la selección del proyecto hasta la entrega de los créditos en tu registro Verra. Tu empresa solo necesita definir cuántas toneladas compensar y durante cuántos años. El resto lo hacemos nosotros.</p>
+    </div>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-ttl">Análisis de tu huella</div>
+          <div class="step-name">Calculamos juntos las toneladas que necesitas compensar</div>
+          <div class="step-desc">Analizamos tu huella de carbono (Scope 1, 2 y 3) y determinamos el volumen de créditos necesario para tus objetivos ESG — ya sea compensación parcial, neutralidad de carbono o Net Zero completo.</div>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-ttl">Selección del proyecto</div>
+          <div class="step-name">Elegimos juntos el proyecto que mejor encaja con tu estrategia</div>
+          <div class="step-desc">Paraguay (Chaco, bosque nativo REDD+) o Chile (Sur Húmedo, conservación y regeneración). Te mostramos el mapa, las coordenadas GPS, las fotos satelitales y el informe de captura estimada antes de firmar nada.</div>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-ttl">Firma del contrato</div>
+          <div class="step-name">Precio fijo garantizado · 20 o 25 años · sin sorpresas</div>
+          <div class="step-desc">Firmamos un contrato de suministro de créditos de carbono con precio fijo por tonelada durante toda la vigencia. Tu empresa sabe exactamente cuánto pagará cada año. Sin fluctuaciones de mercado. Sin renovaciones anuales a precio incierto.</div>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-ttl">Certificación y entrega</div>
+          <div class="step-name">Los créditos se emiten en Verra y se transfieren a tu cuenta</div>
+          <div class="step-desc">Cada año, el verificador independiente acreditado por Verra audita la captura real de CO₂ en el proyecto. Los créditos se emiten con número de serie único en el registro Verra y se transfieren directamente a la cuenta de tu empresa para su retiro.</div>
+        </div>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-ttl">Reporting ESG automatizado</div>
+          <div class="step-name">Reportes listos para CSRD, GHG Protocol, GRI y CDP</div>
+          <div class="step-desc">Tu plataforma CarbonLand genera automáticamente los informes de compensación de carbono compatibles con los principales estándares internacionales. Descarga el certificado, el número de serie Verra y el informe de impacto en cualquier momento.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ QUÉ RECIBES ══ -->
+<div class="benefits">
+  <div class="benefits-inner">
+    <div class="benefits-head">
+      <div>
+        <div class="s-lbl">Lo que incluye</div>
+        <h2 class="s-title">Todo lo<br>que tu<br><em>empresa necesita</em></h2>
+      </div>
+      <p class="s-body">Un contrato con CarbonLand no es solo la compra de créditos. Es un servicio completo de gestión de compensación de carbono que cubre desde el análisis de tu huella hasta el reporte ante reguladores, accionistas y auditores.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="bc bc1 fade-in">
+        <div class="bc-ico">📜</div>
+        <div class="bc-cat">Certificación</div>
+        <div class="bc-ttl">Créditos Verra VCS + CCB</div>
+        <div class="bc-txt">Créditos emitidos bajo el estándar Verra VCS (Verified Carbon Standard) con cobeneficios biodiversidad certificados bajo CCB (Climate, Community & Biodiversity). Reconocidos globalmente.</div>
+      </div>
+      <div class="bc bc2 fade-in">
+        <div class="bc-ico">🔒</div>
+        <div class="bc-cat">Precio</div>
+        <div class="bc-ttl">Precio fijo durante toda la vigencia</div>
+        <div class="bc-txt">El precio por tonelada de CO₂ queda fijado en el contrato. No importa cómo evolucione el mercado voluntario — tu empresa paga lo acordado, ni más ni menos. Planificación ESG segura.</div>
+      </div>
+      <div class="bc bc3 fade-in">
+        <div class="bc-ico">📊</div>
+        <div class="bc-cat">Reporting</div>
+        <div class="bc-ttl">Dashboard ESG en tiempo real</div>
+        <div class="bc-txt">Accede en cualquier momento a tu panel de control: créditos emitidos, créditos retirados, número de serie Verra, captura acumulada, y reportes descargables en formato CSRD, GHG Protocol, GRI y CDP.</div>
+      </div>
+      <div class="bc bc4 fade-in">
+        <div class="bc-ico">🌍</div>
+        <div class="bc-cat">Trazabilidad</div>
+        <div class="bc-ttl">Coordenadas GPS y fotos satelitales</div>
+        <div class="bc-txt">Tu proyecto tiene nombre, coordenadas GPS exactas, fotografías satelitales actualizadas y un informe de verificación independiente. Puedes mostrar a tus accionistas exactamente dónde está el bosque que compensa tu huella.</div>
+      </div>
+      <div class="bc bc5 fade-in">
+        <div class="bc-ico">🛡️</div>
+        <div class="bc-cat">Seguridad</div>
+        <div class="bc-ttl">Buffer pool Verra incluido</div>
+        <div class="bc-txt">El 10% de los créditos generados se retiene en el buffer pool global de Verra como seguro contra reversiones involuntarias (incendios, sequías). Si el proyecto no alcanza el objetivo, Verra cubre la diferencia sin coste para ti.</div>
+      </div>
+      <div class="bc bc6 fade-in">
+        <div class="bc-ico">🤝</div>
+        <div class="bc-cat">Soporte</div>
+        <div class="bc-ttl">Gestor de cuenta dedicado</div>
+        <div class="bc-txt">Un gestor de cuenta especializado acompaña a tu empresa durante toda la vigencia del contrato — desde la firma hasta el reporte anual. Disponible para preguntas regulatorias, auditorías y cambios en tus necesidades ESG.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ PROYECTOS / ZONAS ══ -->
+<div class="zones">
+  <div class="zones-head">
+    <div>
+      <div class="s-lbl">Los Proyectos</div>
+      <h2 class="s-title">Bosque real<br>en <em>Paraguay</em><br>· más próximamente</h2>
+    </div>
+    <p class="s-body">Todos los proyectos de CarbonLand están en territorios con alta densidad de carbono almacenado, protegidos bajo estándar Verra VCS y auditados por verificadores independientes acreditados. Antes de firmar, puedes ver el mapa, las fotos y el informe de verificación de tu proyecto específico.</p>
+  </div>
+  <div class="zones-grid">
+    <div class="zc fade-in">
+      <div class="zc-flag">🇵🇾</div>
+      <div class="zc-country">Paraguay</div>
+      <div class="zc-name">Chaco Occidental</div>
+      <div class="zc-tags">
+        <span class="zc-tag">Bosque nativo REDD+</span>
+        <span class="zc-tag">Verra VCS</span>
+        <span class="zc-tag">CCB certificado</span>
+        <span class="zc-tag">Acuífero Guaraní</span>
+      </div>
+      <div class="zc-row"><span>Tipo de proyecto</span><span>Conservación bosque nativo</span></div>
+      <div class="zc-row"><span>Captura media verificada</span><span>3–5 tn CO₂/ha/año</span></div>
+      <div class="zc-row"><span>Estándar de certificación</span><span>Verra VCS + CCB</span></div>
+      <div class="zc-row"><span>Verificación independiente</span><span>Cada 5 años (VVB acreditado)</span></div>
+      <div class="zc-row"><span>Buffer pool de seguridad</span><span>10% retenido en Verra</span></div>
+      <div class="zc-row"><span>Cobeneficios</span><span>Biodiversidad · agua · comunidades</span></div>
+    </div>
+    <div class="zc fade-in" style="opacity:.5;position:relative;pointer-events:none">
+      <div style="position:absolute;top:1.2rem;right:1.2rem;background:var(--gold);color:var(--bg);
+           font-size:.44rem;letter-spacing:.3em;font-weight:700;padding:.25rem .8rem">
+        PRÓXIMAMENTE
+      </div>
+      <div class="zc-flag">🇨🇱</div>
+      <div class="zc-country">Chile</div>
+      <div class="zc-name">Sur Húmedo · Los Ríos · Los Lagos</div>
+      <div class="zc-tags">
+        <span class="zc-tag">Los Ríos · Los Lagos</span>
+        <span class="zc-tag">Verra VCS</span>
+        <span class="zc-tag">Bosque valdiviano</span>
+        <span class="zc-tag">Alta biodiversidad</span>
+      </div>
+      <div class="zc-row"><span>Tipo de proyecto</span><span>Conservación + regeneración</span></div>
+      <div class="zc-row"><span>Captura media verificada</span><span>3,5 tn CO₂/ha/año</span></div>
+      <div class="zc-row"><span>Estándar de certificación</span><span>Verra VCS + CCB</span></div>
+      <div class="zc-row"><span>Verificación independiente</span><span>Cada 5 años (VVB acreditado)</span></div>
+      <div class="zc-row"><span>Buffer pool de seguridad</span><span>10% retenido en Verra</span></div>
+      <div class="zc-row"><span>Cobeneficios</span><span>Selva valdiviana · glaciares · aves</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ CERTIFICACIÓN ══ -->
+<div class="cert">
+  <div class="cert-inner">
+    <div>
+      <div class="s-lbl">Garantías</div>
+      <h2 class="s-title">Estándares<br>que tus<br><em>auditores conocen</em></h2>
+      <div class="s-quote">"No pedimos confianza ciega. Te damos números de serie, coordenadas y verificadores independientes."</div>
+      <p class="s-body">Los créditos de carbono de CarbonLand cumplen los estándares que exigen tus auditores, inversores y reguladores. Cada crédito tiene un número de serie único en el registro público de Verra, verificado por un tercero acreditado y descargable en cualquier momento desde tu cuenta.</p>
+    </div>
+    <div>
+      <div class="cert-logos">
+        <div class="cert-card fade-in">
+          <div class="cert-card-ico">🌐</div>
+          <div class="cert-card-name">Verra VCS</div>
+          <div class="cert-card-desc">Verified Carbon Standard — el estándar de referencia global. Registro público. ~68% de todos los créditos voluntarios del mundo se certifican bajo VCS.</div>
+        </div>
+        <div class="cert-card fade-in">
+          <div class="cert-card-ico">🌿</div>
+          <div class="cert-card-name">CCB Standard</div>
+          <div class="cert-card-desc">Climate, Community & Biodiversity — certifica los cobeneficios: biodiversidad local, comunidades indígenas y servicios ecosistémicos más allá del CO₂.</div>
+        </div>
+        <div class="cert-card fade-in">
+          <div class="cert-card-ico">📋</div>
+          <div class="cert-card-name">CSRD Compatible</div>
+          <div class="cert-card-desc">Los reportes de CarbonLand están diseñados para integrarse directamente en los informes de sostenibilidad exigidos por la directiva europea CSRD.</div>
+        </div>
+        <div class="cert-card fade-in">
+          <div class="cert-card-ico">🏭</div>
+          <div class="cert-card-name">GHG Protocol</div>
+          <div class="cert-card-desc">Compatible con el protocolo de gases de efecto invernadero (GHG Protocol) — el marco contable de referencia para el inventario de emisiones corporativas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ CALCULADORA ══ -->
+<div class="calc" id="calculadora">
+  <div class="calc-inner">
+    <div class="calc-head">
+      <div>
+        <div class="s-lbl">Calculadora</div>
+        <h2 class="s-title">¿Cuánto<br>necesitas<br><em>compensar?</em></h2>
+      </div>
+      <p class="s-body">Introduce los datos básicos de tu empresa y calcula en segundos el volumen de créditos que necesitas, las hectáreas de proyecto que te corresponden y el coste anual estimado con precio garantizado. Sin compromiso.</p>
+    </div>
+    <div class="calc-box">
+      <div class="calc-form">
+        <div class="calc-field">
+          <label>Emisiones anuales (toneladas CO₂)</label>
+          <input type="number" id="inp-emissions" placeholder="Ej: 5000" oninput="calcResult()">
+        </div>
+        <div class="calc-field">
+          <label>% que quieres compensar</label>
+          <select id="inp-pct" onchange="calcResult()">
+            <option value="25">25% — Compensación parcial</option>
+            <option value="50">50% — Compensación media</option>
+            <option value="100" selected>100% — Neutralidad de carbono</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>País del proyecto preferido</label>
+          <select id="inp-country" onchange="calcResult()">
+            <option value="PY">Paraguay — Chaco</option>
+            <option value="CL">Chile — Sur Húmedo</option>
+            <option value="BOTH">Ambos países</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>Duración del contrato</label>
+          <select id="inp-years" onchange="calcResult()">
+            <option value="20">20 años</option>
+            <option value="25" selected>25 años</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-results" id="calc-results" style="display:none">
+        <div class="calc-results-title">Tu propuesta estimada</div>
+        <div class="calc-kpis">
+          <div>
+            <div class="ckpi-val" id="res-tonnes">—</div>
+            <div class="ckpi-lbl">Toneladas CO₂<br>a compensar / año</div>
+          </div>
+          <div>
+            <div class="ckpi-val" id="res-ha">—</div>
+            <div class="ckpi-lbl">Hectáreas de proyecto<br>asignadas</div>
+          </div>
+          <div>
+            <div class="ckpi-val" id="res-cost">—</div>
+            <div class="ckpi-lbl">Coste anual estimado<br>(precio garantizado)</div>
+          </div>
+        </div>
+        <div class="calc-cta">
+          <a href="#contacto" class="calc-cta-btn">Solicitar propuesta personalizada sin compromiso →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ PLANES ══ -->
+<div class="pricing" id="planes">
+  <div class="pricing-inner">
+    <div class="pricing-head">
+      <div>
+        <div class="s-lbl">Planes</div>
+        <h2 class="s-title">Un contrato<br>para cada<br><em>empresa</em></h2>
+      </div>
+      <p class="s-body">Tres niveles de servicio según el tamaño de tu empresa y tus objetivos ESG. Todos incluyen créditos Verra VCS+CCB, precio fijo garantizado, dashboard ESG y gestor de cuenta. El precio exacto por tonelada se acuerda en la propuesta personalizada según el volumen contratado.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="pc-card fade-in">
+        <div class="pc-name">Compacto</div>
+        <div class="pc-price">500<sup>tn+</sup></div>
+        <div class="pc-per">toneladas CO₂ / año · contrato 20 años</div>
+        <div class="pc-hr"></div>
+        <ul class="pc-feats">
+          <li>Créditos Verra VCS + CCB certificados</li>
+          <li>Precio fijo garantizado 20 años</li>
+          <li>Dashboard ESG en tiempo real</li>
+          <li>Reportes CSRD / GHG Protocol</li>
+          <li>Número de serie Verra por crédito</li>
+          <li>Gestor de cuenta dedicado</li>
+          <li>Buffer pool seguridad incluido</li>
+          <li>Proyecto en Paraguay</li>
+        </ul>
+        <a href="#contacto" class="pc-btn">Solicitar propuesta</a>
+      </div>
+      <div class="pc-card feat fade-in">
+        <div class="pc-name">Estándar</div>
+        <div class="pc-price">2.000<sup>tn+</sup></div>
+        <div class="pc-per">toneladas CO₂ / año · contrato 25 años</div>
+        <div class="pc-hr"></div>
+        <ul class="pc-feats">
+          <li>Todo lo del plan Compacto</li>
+          <li>Precio fijo garantizado 25 años</li>
+          <li>Proyecto exclusivo asignado</li>
+          <li>Coordenadas GPS + fotos satelitales</li>
+          <li>Visita al proyecto (opción)</li>
+          <li>Informe de impacto biodiversidad CCB</li>
+          <li>Integración directa con sistema ERP/ESG</li>
+          <li>Opción proyectos en ambos países</li>
+        </ul>
+        <a href="#contacto" class="pc-btn">Solicitar propuesta</a>
+      </div>
+      <div class="pc-card fade-in">
+        <div class="pc-name">Corporativo</div>
+        <div class="pc-price">10.000<sup>tn+</sup></div>
+        <div class="pc-per">toneladas CO₂ / año · contrato a medida</div>
+        <div class="pc-hr"></div>
+        <ul class="pc-feats">
+          <li>Todo lo del plan Estándar</li>
+          <li>Proyecto dedicado con tu nombre</li>
+          <li>Contrato multi-jurisdicción PY + CL</li>
+          <li>Equipo de reporte ESG incluido</li>
+          <li>Presentación anual para consejo/inversores</li>
+          <li>Asesoría regulatoria CSRD incluida</li>
+          <li>SLA de entrega de créditos garantizado</li>
+          <li>Estructura de contrato a medida</li>
+        </ul>
+        <a href="#contacto" class="pc-btn">Hablar con un especialista</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ PROCESO DE CONTRATACIÓN ══ -->
+<div class="process">
+  <div class="process-inner">
+    <div class="s-lbl">Cómo empezamos</div>
+    <h2 class="s-title">De la consulta<br>al primer crédito<br>en <em>4 pasos</em></h2>
+    <div class="process-steps">
+      <div class="ps fade-in">
+        <div class="ps-n">01</div>
+        <div class="ps-ttl">Semana 1</div>
+        <div class="ps-name">Consulta gratuita</div>
+        <div class="ps-desc">Analizamos juntos tu huella de carbono, tus compromisos ESG y el volumen de créditos que necesitas. Sin compromiso. Sin coste. Recibes un informe preliminar en 48 horas.</div>
+      </div>
+      <div class="ps fade-in">
+        <div class="ps-n">02</div>
+        <div class="ps-ttl">Semanas 1–2</div>
+        <div class="ps-name">Propuesta personalizada</div>
+        <div class="ps-desc">Te presentamos el proyecto específico (país, zona, fotos satelitales, estimación de captura), el precio por tonelada y las condiciones del contrato. Todo detallado y transparente.</div>
+      </div>
+      <div class="ps fade-in">
+        <div class="ps-n">03</div>
+        <div class="ps-ttl">Semana 3</div>
+        <div class="ps-name">Firma del contrato</div>
+        <div class="ps-desc">Firma digital del contrato de suministro de créditos. Precio fijo. Duración acordada. A partir de aquí CarbonLand gestiona todo el proceso de certificación y verificación.</div>
+      </div>
+      <div class="ps fade-in">
+        <div class="ps-n">04</div>
+        <div class="ps-ttl">Año 1+</div>
+        <div class="ps-name">Créditos y reportes</div>
+        <div class="ps-desc">Cada año recibes los créditos verificados en tu cuenta Verra y los reportes ESG listos para descargar. Tu gestor de cuenta te acompaña en cada renovación y auditoría.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ FAQ ══ -->
+<div class="faq" id="faq">
+  <div class="faq-inner">
+    <div>
+      <div class="s-lbl">Preguntas frecuentes</div>
+      <h2 class="s-title">Respuestas<br>claras a las<br><em>preguntas que importan</em></h2>
+      <p class="s-body" style="margin-top:1.5rem">Si tienes alguna pregunta que no encuentres aquí, tu gestor de cuenta te responderá en menos de 24 horas.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué es un crédito de carbono Verra VCS?</div>
+        <div class="faq-a"><div class="faq-a-inner">Un crédito de carbono Verra VCS (Verified Carbon Standard) equivale a una tonelada de CO₂ que ha sido capturada o evitada por un proyecto certificado. Cada crédito tiene un número de serie único en el registro público de Verra, verificado por un auditor independiente acreditado. Al retirar el crédito, queda registrado permanentemente como compensado por tu empresa.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cómo sé que el proyecto existe realmente?</div>
+        <div class="faq-a"><div class="faq-a-inner">Antes de firmar el contrato, te mostramos las coordenadas GPS exactas del proyecto, imágenes satelitales actualizadas, el certificado de validación Verra y el informe del verificador independiente. También puedes solicitar una visita al proyecto. Todos los proyectos están en el registro público de Verra, accesible para cualquier persona.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si hay un incendio o sequía en el proyecto?</div>
+        <div class="faq-a"><div class="faq-a-inner">Verra exige que el 10% de todos los créditos emitidos se retenga en un "buffer pool" global como seguro colectivo. Si un proyecto sufre una reversión involuntaria (incendio, sequía extrema), Verra libera créditos del buffer pool para cubrir la diferencia. Tu empresa no sufre ningún impacto — los créditos comprometidos en tu contrato están garantizados.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Son válidos estos créditos para cumplir con CSRD?</div>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Los créditos Verra VCS son reconocidos internacionalmente y aceptados como evidencia de compensación de carbono bajo los marcos CSRD, GHG Protocol, GRI y CDP. Los reportes que genera automáticamente tu cuenta CarbonLand están estructurados para integrarse directamente en tus informes de sostenibilidad. Te recomendamos consultar con tu auditor sobre el tratamiento contable específico en tu sector.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿El precio puede subir durante el contrato?</div>
+        <div class="faq-a"><div class="faq-a-inner">No. El precio por tonelada de CO₂ queda fijado en el contrato desde el primer día. No está sujeto a la evolución del mercado voluntario ni a ningún índice externo. Tu empresa sabe exactamente lo que pagará cada año durante toda la vigencia del contrato — 20 o 25 años según lo acordado. Esta es una de las ventajas principales de los contratos a largo plazo de CarbonLand.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cuándo recibo los primeros créditos?</div>
+        <div class="faq-a"><div class="faq-a-inner">Los primeros créditos se emiten en el Registro Verra tras la primera verificación independiente del proyecto, que tiene lugar al completar el primer año de actividad. A partir de ese momento, recibes créditos anualmente. Si el proyecto ya está en fase operativa, los primeros créditos pueden estar disponibles antes de los 12 meses desde la firma del contrato.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">¿Puedo cambiar el volumen contratado en el futuro?</div>
+        <div class="faq-a"><div class="faq-a-inner">Sí, dentro de los límites acordados en el contrato. Si tu empresa crece y necesita compensar más emisiones, podemos ampliar el contrato o iniciar un segundo proyecto. Los ajustes a la baja están sujetos a las condiciones de modificación del contrato. Tu gestor de cuenta te asesorará sobre las opciones disponibles según tu situación específica.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div"></div>
+
+<!-- ══ CONTACTO ══ -->
+<div class="cierre" id="contacto">
+  <div class="cierre-orb"></div>
+  <div class="cierre-inner">
+    <span class="cierre-sym">◈ ✦ ◈</span>
+    <h2 class="cierre-title">Empieza<br>a compensar<br>tu <em>huella hoy.</em></h2>
+    <p class="cierre-desc">Solicita una consulta gratuita. Analizamos tu huella, te presentamos el proyecto y te enviamos una propuesta con precio garantizado en 48 horas. Sin compromiso.</p>
+    <a href="mailto:hola@carbonland.earth?subject=Solicitud%20de%20propuesta%20CarbonLand" class="cierre-btn">Solicitar consulta gratuita</a>
+    <div class="cierre-foot">CARBONLAND PLATFORM · PARAGUAY · CRÉDITOS VERRA VCS+CCB · EXPANSIÓN GLOBAL PRÓXIMAMENTE · 2026</div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-brand">CARBONLAND 🌿</div>
+  <div class="f-links">
+    <a href="#calculadora">Calculadora</a>
+    <a href="#planes">Planes</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="f-note">Carbon Credit Platform · Paraguay · Verra VCS · 2026</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// PRICES per tonne by country (client-facing, no internal margins shown)
+const PRICE = { PY: 30, CL: 35, BOTH: 32 };
+const CAPTURE = 3.5; // tn CO2/ha/year
+
+function calcResult() {
+  const emissions = parseFloat(document.getElementById('inp-emissions').value) || 0;
+  const pct       = parseInt(document.getElementById('inp-pct').value) / 100;
+  const country   = document.getElementById('inp-country').value;
+  const years     = parseInt(document.getElementById('inp-years').value);
+
+  if (!emissions) { document.getElementById('calc-results').style.display = 'none'; return; }
+
+  const tonnes   = Math.round(emissions * pct);
+  const ha       = Math.ceil(tonnes / CAPTURE);
+  const annCost  = tonnes * PRICE[country];
+
+  document.getElementById('res-tonnes').textContent = tonnes.toLocaleString('es-ES') + ' tn';
+  document.getElementById('res-ha').textContent     = ha.toLocaleString('es-ES') + ' ha';
+  document.getElementById('res-cost').textContent   = '$' + annCost.toLocaleString('es-ES') + '/año';
+  document.getElementById('calc-results').style.display = 'block';
+}
+</script>
+</body>
+</html>
