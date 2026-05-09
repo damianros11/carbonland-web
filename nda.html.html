@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARBONLAND — Acuerdo de Confidencialidad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@200;300;400;500;600;700&family=Lora:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #0e0c07;
+  --bark:  #1a1409;
+  --deep:  #241c0a;
+  --gold:  #c47c2b;
+  --gold2: #e8c98a;
+  --gold3: #f5e8c0;
+  --cream: #f0ece0;
+  --mist:  #b8c8a8;
+  --white: #fdfaf3;
+  --leaf:  #2d4a1e;
+  --moss:  #6aaa50;
+  --jade:  #2a6b5a;
+  --red:   #8b2d2d;
+  --border: rgba(196,124,43,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");opacity:.6}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(14,12,7,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(4px)}
+.nav-brand{display:flex;align-items:center;gap:.9rem}
+.nav-sym{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--gold)}
+.nav-logo{font-weight:700;font-size:.9rem;letter-spacing:.45em;color:var(--gold);text-transform:uppercase}
+.nav-tag{font-size:.52rem;letter-spacing:.25em;color:var(--mist);opacity:.5}
+
+/* ── HERO HEADER ── */
+.page-header{padding:9rem 3rem 5rem;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--bark),var(--bg))}
+.page-header::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(45,74,30,.18) 0%,transparent 70%)}
+.ph-eyebrow{font-size:.5rem;letter-spacing:.5em;text-transform:uppercase;font-weight:600;
+  color:var(--gold);margin-bottom:1.2rem;position:relative}
+.ph-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,5rem);
+  font-weight:300;color:var(--white);line-height:1;margin-bottom:1rem;position:relative}
+.ph-title em{font-style:italic;color:var(--gold)}
+.ph-sub{font-family:'Lora',serif;font-style:italic;font-size:1.05rem;color:var(--mist);
+  max-width:600px;margin:0 auto 2rem;line-height:1.7;position:relative}
+.ph-line{width:60px;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);
+  margin:0 auto;position:relative}
+
+/* ── STEPS INDICATOR ── */
+.steps-bar{max-width:800px;margin:3rem auto 0;display:flex;align-items:center;gap:0;position:relative}
+.step-ind{display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:1;position:relative;z-index:1}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:600;border:1.5px solid rgba(196,124,43,.3);
+  background:var(--bg);color:var(--mist);transition:all .4s}
+.step-circle.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.step-circle.done{background:var(--jade);color:var(--white);border-color:var(--jade)}
+.step-label{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);
+  opacity:.5;text-align:center;transition:all .4s}
+.step-label.active{color:var(--gold);opacity:1}
+.step-connector{flex:1;height:1px;background:rgba(196,124,43,.2);position:relative;top:-10px}
+
+/* ── MAIN CONTAINER ── */
+.container{max-width:860px;margin:0 auto;padding:4rem 3rem 6rem}
+
+/* ── SECTION BLOCKS ── */
+.section{display:none}
+.section.active{display:block}
+
+/* ── FORM STYLES ── */
+.form-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--white);
+  margin-bottom:.4rem;font-weight:400}
+.form-title em{color:var(--gold);font-style:italic}
+.form-sub{font-size:.82rem;color:var(--mist);margin-bottom:2.5rem;line-height:1.65}
+
+.form-group-title{font-size:.48rem;letter-spacing:.4em;text-transform:uppercase;font-weight:700;
+  color:var(--gold);margin:2.5rem 0 1.2rem;padding-bottom:.6rem;
+  border-bottom:1px solid var(--border)}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:0}
+.form-grid.full{grid-template-columns:1fr}
+.form-grid.thirds{grid-template-columns:1fr 1fr 1fr}
+
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.48rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);font-weight:600}
+.field label span{color:var(--red);margin-left:.2rem}
+.field input,.field select,.field textarea{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(196,124,43,.2);
+  color:var(--white);
+  padding:.85rem 1rem;
+  font-family:'Raleway',sans-serif;
+  font-size:.88rem;
+  font-weight:300;
+  outline:none;
+  transition:border-color .3s,background .3s;
+  width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--gold);background:rgba(196,124,43,.06)}
+.field input::placeholder,.field textarea::placeholder{color:rgba(184,200,168,.3)}
+.field select option{background:var(--bark);color:var(--white)}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6}
+.field-note{font-size:.7rem;color:var(--mist);opacity:.5;margin-top:.2rem;font-style:italic}
+
+/* ── ERROR STATES ── */
+.field.error input,.field.error select,.field.error textarea{border-color:var(--red)}
+.field .err-msg{font-size:.7rem;color:#e08080;margin-top:.3rem;display:none}
+.field.error .err-msg{display:block}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;gap:1rem}
+.btn{padding:1rem 2.5rem;font-size:.54rem;letter-spacing:.4em;text-transform:uppercase;
+  font-weight:600;cursor:pointer;transition:all .35s;border:none;font-family:'Raleway',sans-serif}
+.btn-primary{background:var(--gold);color:var(--bg)}
+.btn-primary:hover{background:var(--gold2)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-secondary{background:none;border:1px solid rgba(196,124,43,.35);color:var(--gold)}
+.btn-secondary:hover{background:rgba(196,124,43,.1)}
+
+/* ── NDA DOCUMENT ── */
+.nda-wrapper{background:rgba(255,255,255,.02);border:1px solid var(--border);margin-bottom:2rem}
+.nda-header{background:var(--deep);padding:2rem 2.5rem;border-bottom:1px solid var(--border)}
+.nda-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.nda-logo{font-weight:700;font-size:.9rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase}
+.nda-ref{font-size:.6rem;color:var(--mist);opacity:.5;text-align:right}
+.nda-doc-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:.3rem}
+.nda-doc-sub{font-size:.75rem;color:var(--mist);opacity:.7;font-style:italic}
+
+.nda-body{padding:2.5rem;max-height:520px;overflow-y:auto;scroll-behavior:smooth}
+.nda-body::-webkit-scrollbar{width:4px}
+.nda-body::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+.nda-body::-webkit-scrollbar-thumb{background:rgba(196,124,43,.3);border-radius:2px}
+
+.nda-lang-switch{display:flex;gap:0;margin-bottom:2rem;border:1px solid var(--border)}
+.lang-btn{padding:.5rem 1.5rem;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;
+  font-weight:600;cursor:pointer;background:none;border:none;color:var(--mist);
+  font-family:'Raleway',sans-serif;transition:all .3s;flex:1}
+.lang-btn.active{background:rgba(196,124,43,.15);color:var(--gold)}
+
+.nda-section-title{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin:1.8rem 0 .6rem}
+.nda-section-title:first-child{margin-top:0}
+.nda-text{font-size:.8rem;color:var(--mist);line-height:1.85;margin-bottom:.8rem;opacity:.9}
+.nda-text strong{color:var(--gold2)}
+.nda-parties{background:rgba(196,124,43,.06);border:1px solid rgba(196,124,43,.15);
+  padding:1.2rem 1.5rem;margin:1.2rem 0;font-size:.8rem;color:var(--mist);line-height:1.8}
+.nda-parties strong{color:var(--gold2);display:block;margin-bottom:.3rem}
+.nda-numbered{counter-reset:nda-counter;list-style:none;margin:.8rem 0}
+.nda-numbered li{counter-increment:nda-counter;padding:.5rem 0 .5rem 2rem;position:relative;
+  font-size:.8rem;color:var(--mist);line-height:1.75;border-bottom:1px solid rgba(255,255,255,.04)}
+.nda-numbered li::before{content:counter(nda-counter)'.';position:absolute;left:0;
+  color:var(--gold);font-weight:600;font-size:.75rem}
+.nda-scroll-hint{text-align:center;padding:1rem;font-size:.65rem;color:var(--mist);opacity:.4;
+  border-top:1px solid var(--border);letter-spacing:.15em}
+.nda-divider{height:1px;background:linear-gradient(to right,transparent,rgba(196,124,43,.25),transparent);
+  margin:1.5rem 0}
+
+/* ── SIGNATURE BLOCK ── */
+.sig-block{background:rgba(196,124,43,.05);border:1px solid rgba(196,124,43,.25);padding:2rem 2.5rem;margin-bottom:2rem}
+.sig-title{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);
+  font-weight:700;margin-bottom:1.5rem}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.sig-company-data{font-size:.8rem;color:var(--mist);line-height:1.8;margin-bottom:1.5rem;
+  padding:1rem;background:rgba(255,255,255,.03);border-left:2px solid var(--gold)}
+.sig-company-data span{color:var(--gold2)}
+
+/* ── ACCEPT BLOCK ── */
+.accept-block{margin-top:1.5rem}
+.checkbox-row{display:flex;align-items:flex-start;gap:1rem;padding:1rem;
+  background:rgba(255,255,255,.02);border:1px solid rgba(196,124,43,.15);
+  cursor:pointer;transition:background .3s;margin-bottom:.8rem}
+.checkbox-row:hover{background:rgba(196,124,43,.06)}
+.checkbox-row input[type="checkbox"]{width:18px;height:18px;accent-color:var(--gold);
+  flex-shrink:0;margin-top:.1rem;cursor:pointer}
+.checkbox-row label{font-size:.8rem;color:var(--mist);line-height:1.6;cursor:pointer}
+.checkbox-row label strong{color:var(--gold2)}
+
+.sign-field{margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.5rem}
+.sign-name-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(196,124,43,.2);
+  color:var(--white);padding:1rem 1.2rem;font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-style:italic;outline:none;transition:border-color .3s;
+  letter-spacing:.05em}
+.sign-name-input:focus{border-color:var(--gold);background:rgba(196,124,43,.06)}
+.sign-name-input::placeholder{color:rgba(184,200,168,.25);font-size:1rem}
+.sign-date{font-size:.7rem;color:var(--mist);opacity:.5;margin-top:.6rem;text-align:right}
+
+/* ── SUMMARY CARD ── */
+.summary-card{background:rgba(255,255,255,.02);border:1px solid var(--border);padding:2rem 2.5rem;margin-bottom:2rem}
+.summary-row{display:flex;justify-content:space-between;padding:.65rem 0;
+  border-bottom:1px solid rgba(255,255,255,.05);font-size:.82rem}
+.summary-row:last-child{border-bottom:none}
+.summary-row span:first-child{color:var(--mist)}
+.summary-row span:last-child{color:var(--gold2);font-weight:500}
+
+/* ── SUCCESS ── */
+.success-block{text-align:center;padding:4rem 2rem}
+.success-ico{font-size:3.5rem;margin-bottom:1.5rem;display:block}
+.success-title{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--white);
+  margin-bottom:1rem;font-weight:300}
+.success-title em{color:var(--gold);font-style:italic}
+.success-text{font-family:'Lora',serif;font-style:italic;font-size:1rem;color:var(--mist);
+  line-height:1.75;max-width:520px;margin:0 auto 2rem}
+.success-ref{font-size:.65rem;letter-spacing:.3em;color:var(--mist);opacity:.4;margin-top:1rem}
+
+/* ── PROGRESS BAR ── */
+.read-progress{height:3px;background:rgba(196,124,43,.1);position:relative;margin-bottom:.5rem}
+.read-bar{height:100%;background:var(--gold);width:0;transition:width .2s}
+.read-label{font-size:.6rem;color:var(--mist);opacity:.5;text-align:right;margin-bottom:1rem}
+
+@media(max-width:700px){
+  nav,.container,.page-header{padding-left:1.5rem;padding-right:1.5rem}
+  .form-grid,.form-grid.thirds,.sig-grid{grid-template-columns:1fr}
+  .btn-row{flex-direction:column}
+  .btn{width:100%;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-sym">🌿</div>
+    <div>
+      <div class="nav-logo">CARBONLAND</div>
+      <div class="nav-tag">Acceso Confidencial</div>
+    </div>
+  </div>
+  <div class="nav-tag">Documento Privado · 2026</div>
+</nav>
+
+<!-- ══ HEADER ══ -->
+<div class="page-header">
+  <div class="ph-eyebrow">Acuerdo de Confidencialidad · Non-Disclosure Agreement</div>
+  <h1 class="ph-title">Acceso <em>Confidencial</em></h1>
+  <p class="ph-sub">Para acceder a la información de CarbonLand y recibir una propuesta personalizada, es necesario firmar el acuerdo de confidencialidad. Toda la información compartida será tratada con la máxima discreción.</p>
+  <div class="ph-line"></div>
+
+  <!-- Steps indicator -->
+  <div class="steps-bar">
+    <div class="step-ind">
+      <div class="step-circle active" id="sc1">1</div>
+      <div class="step-label active" id="sl1">Datos empresa</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-ind">
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-label" id="sl2">Representante</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-ind">
+      <div class="step-circle" id="sc3">3</div>
+      <div class="step-label" id="sl3">Acuerdo NDA</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-ind">
+      <div class="step-circle" id="sc4">4</div>
+      <div class="step-label" id="sl4">Firma</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="container">
+
+  <!-- ── PASO 1: DATOS DE LA EMPRESA ── -->
+  <div class="section active" id="step1">
+    <div class="form-title">Datos de la <em>empresa</em></div>
+    <p class="form-sub">Información corporativa de la empresa interesada en los servicios de CarbonLand. Todos los campos marcados con * son obligatorios.</p>
+
+    <div class="form-group-title">Identificación corporativa</div>
+    <div class="form-grid">
+      <div class="field" id="f-razon">
+        <label>Razón social <span>*</span></label>
+        <input type="text" id="razon" placeholder="Nombre legal completo de la empresa">
+        <div class="err-msg">Este campo es obligatorio</div>
+      </div>
+      <div class="field" id="f-cif">
+        <label>CIF / NIF / Tax ID <span>*</span></label>
+        <input type="text" id="cif" placeholder="B12345678">
+        <div class="err-msg">Introduce un CIF/NIF válido</div>
+      </div>
+      <div class="field" id="f-sector">
+        <label>Sector de actividad <span>*</span></label>
+        <select id="sector">
+          <option value="">Selecciona un sector</option>
+          <option>Manufactura e industria</option>
+          <option>Logística y transporte</option>
+          <option>Energía y utilities</option>
+          <option>Construcción e inmobiliaria</option>
+          <option>Agroalimentario</option>
+          <option>Retail y distribución</option>
+          <option>Tecnología</option>
+          <option>Finanzas y seguros</option>
+          <option>Servicios profesionales</option>
+          <option>Hostelería y turismo</option>
+          <option>Aviación y aeronáutica</option>
+          <option>Química y farmacéutica</option>
+          <option>Otro</option>
+        </select>
+        <div class="err-msg">Selecciona un sector</div>
+      </div>
+      <div class="field" id="f-empleados">
+        <label>Número de empleados <span>*</span></label>
+        <select id="empleados">
+          <option value="">Selecciona</option>
+          <option>1–10 empleados</option>
+          <option>11–50 empleados</option>
+          <option>51–250 empleados</option>
+          <option>251–1.000 empleados</option>
+          <option>1.001–5.000 empleados</option>
+          <option>Más de 5.000 empleados</option>
+        </select>
+        <div class="err-msg">Selecciona el tamaño de la empresa</div>
+      </div>
+    </div>
+
+    <div class="form-group-title">Dirección fiscal</div>
+    <div class="form-grid full">
+      <div class="field" id="f-direccion">
+        <label>Dirección <span>*</span></label>
+        <input type="text" id="direccion" placeholder="Calle, número, piso">
+        <div class="err-msg">Introduce la dirección fiscal</div>
+      </div>
+    </div>
+    <div class="form-grid thirds">
+      <div class="field" id="f-ciudad">
+        <label>Ciudad <span>*</span></label>
+        <input type="text" id="ciudad" placeholder="Madrid">
+        <div class="err-msg">Introduce la ciudad</div>
+      </div>
+      <div class="field" id="f-cp">
+        <label>Código postal <span>*</span></label>
+        <input type="text" id="cp" placeholder="28001">
+        <div class="err-msg">Introduce el código postal</div>
+      </div>
+      <div class="field" id="f-pais">
+        <label>País <span>*</span></label>
+        <input type="text" id="pais" placeholder="España" value="España">
+        <div class="err-msg">Introduce el país</div>
+      </div>
+    </div>
+
+    <div class="form-group-title">Huella de carbono y compromisos ESG</div>
+    <div class="form-grid">
+      <div class="field" id="f-emisiones">
+        <label>Emisiones anuales estimadas (tn CO₂) <span>*</span></label>
+        <select id="emisiones">
+          <option value="">Selecciona un rango</option>
+          <option>Menos de 500 tn CO₂/año</option>
+          <option>500 – 2.000 tn CO₂/año</option>
+          <option>2.000 – 10.000 tn CO₂/año</option>
+          <option>10.000 – 50.000 tn CO₂/año</option>
+          <option>Más de 50.000 tn CO₂/año</option>
+          <option>No lo tenemos medido</option>
+        </select>
+        <div class="err-msg">Selecciona un rango de emisiones</div>
+      </div>
+      <div class="field" id="f-compromiso">
+        <label>Compromiso ESG actual <span>*</span></label>
+        <select id="compromiso">
+          <option value="">Selecciona</option>
+          <option>Cumplimiento CSRD (obligatorio)</option>
+          <option>Compromiso Net Zero voluntario</option>
+          <option>Objetivo SBTi firmado</option>
+          <option>Política ESG interna</option>
+          <option>Exigencia de inversores / accionistas</option>
+          <option>En proceso de definición</option>
+          <option>Ninguno todavía</option>
+        </select>
+        <div class="err-msg">Selecciona tu situación ESG</div>
+      </div>
+    </div>
+    <div class="form-grid full">
+      <div class="field">
+        <label>¿Por qué estás interesado en créditos de carbono? (opcional)</label>
+        <textarea id="motivacion" placeholder="Describe brevemente tu situación y objetivos de compensación de carbono..."></textarea>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <div></div>
+      <button class="btn btn-primary" onclick="goTo(2)">Continuar → Datos del representante</button>
+    </div>
+  </div>
+
+  <!-- ── PASO 2: DATOS DEL REPRESENTANTE ── -->
+  <div class="section" id="step2">
+    <div class="form-title">Datos del <em>representante</em></div>
+    <p class="form-sub">Persona física que firma el acuerdo en nombre de la empresa. Debe tener poderes de representación suficientes para vincular a la empresa en este tipo de acuerdos.</p>
+
+    <div class="form-group-title">Identificación personal</div>
+    <div class="form-grid">
+      <div class="field" id="f-nombre">
+        <label>Nombre <span>*</span></label>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <div class="err-msg">Introduce el nombre</div>
+      </div>
+      <div class="field" id="f-apellidos">
+        <label>Apellidos <span>*</span></label>
+        <input type="text" id="apellidos" placeholder="Apellidos">
+        <div class="err-msg">Introduce los apellidos</div>
+      </div>
+      <div class="field" id="f-dni">
+        <label>DNI / NIE / Pasaporte <span>*</span></label>
+        <input type="text" id="dni" placeholder="12345678A">
+        <div class="err-msg">Introduce el documento de identidad</div>
+      </div>
+      <div class="field" id="f-cargo">
+        <label>Cargo en la empresa <span>*</span></label>
+        <input type="text" id="cargo" placeholder="CEO / Director General / ...">
+        <div class="err-msg">Introduce tu cargo</div>
+      </div>
+    </div>
+
+    <div class="form-group-title">Datos de contacto</div>
+    <div class="form-grid">
+      <div class="field" id="f-email">
+        <label>Email corporativo <span>*</span></label>
+        <input type="email" id="email" placeholder="nombre@empresa.com">
+        <div class="err-msg">Introduce un email válido</div>
+      </div>
+      <div class="field" id="f-telefono">
+        <label>Teléfono directo <span>*</span></label>
+        <input type="tel" id="telefono" placeholder="+34 600 000 000">
+        <div class="err-msg">Introduce un teléfono de contacto</div>
+      </div>
+      <div class="field" id="f-linkedin">
+        <label>LinkedIn (opcional)</label>
+        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/...">
+      </div>
+      <div class="field" id="f-como">
+        <label>¿Cómo conoció CarbonLand? <span>*</span></label>
+        <select id="como">
+          <option value="">Selecciona</option>
+          <option>Referido por un contacto</option>
+          <option>Búsqueda en internet</option>
+          <option>Redes sociales (LinkedIn)</option>
+          <option>Evento o conferencia</option>
+          <option>Consultoría ESG</option>
+          <option>Otro</option>
+        </select>
+        <div class="err-msg">Selecciona cómo nos conociste</div>
+      </div>
+    </div>
+
+    <div class="form-group-title">Declaración de capacidad</div>
+    <div style="background:rgba(196,124,43,.05);border:1px solid rgba(196,124,43,.15);padding:1.2rem 1.5rem;margin-bottom:1rem">
+      <label style="display:flex;align-items:flex-start;gap:.8rem;cursor:pointer">
+        <input type="checkbox" id="chk-poderes" style="width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;margin-top:.15rem">
+        <span style="font-size:.82rem;color:var(--mist);line-height:1.65">
+          <strong style="color:var(--gold2)">Declaro</strong> que tengo poderes suficientes para firmar el presente Acuerdo de Confidencialidad en nombre y representación de la empresa indicada, y que dicho acuerdo vinculará a la empresa de forma legalmente válida.
+        </span>
+      </label>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goTo(1)">← Volver</button>
+      <button class="btn btn-primary" onclick="goTo(3)">Continuar → Leer el acuerdo</button>
+    </div>
+  </div>
+
+  <!-- ── PASO 3: ACUERDO NDA ── -->
+  <div class="section" id="step3">
+    <div class="form-title">Acuerdo de <em>confidencialidad</em></div>
+    <p class="form-sub">Lee el documento completo antes de proceder a la firma. El acuerdo es legalmente vinculante una vez aceptado digitalmente.</p>
+
+    <div class="nda-wrapper">
+      <div class="nda-header">
+        <div class="nda-header-top">
+          <div class="nda-logo">CARBONLAND 🌿</div>
+          <div class="nda-ref">
+            <div>Ref: CL-NDA-2026</div>
+            <div id="nda-date-ref" style="margin-top:.2rem"></div>
+          </div>
+        </div>
+        <div class="nda-doc-title">Acuerdo de Confidencialidad y No Divulgación</div>
+        <div class="nda-doc-sub">Non-Disclosure Agreement (NDA) · Versión bilingüe / Bilingual Version</div>
+      </div>
+
+      <div class="nda-body" id="nda-body" onscroll="updateReadProgress()">
+        <div class="nda-lang-switch">
+          <button class="lang-btn active" onclick="setLang('es')">🇪🇸 Español</button>
+          <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
+        </div>
+
+        <!-- ── ESPAÑOL ── -->
+        <div id="nda-es">
+
+          <div class="nda-section-title">PARTES DEL ACUERDO</div>
+          <div class="nda-parties">
+            <strong>PARTE DIVULGADORA:</strong>
+            CARBONLAND PLATFORM S.A. (en adelante, "CarbonLand"), sociedad propietaria y gestora de la plataforma de créditos de carbono CarbonLand, con domicilio social en Paraguay.
+            <br><br>
+            <strong>PARTE RECEPTORA:</strong>
+            La empresa y su representante cuyos datos se han indicado en el presente formulario (en adelante, "la Parte Receptora").
+          </div>
+
+          <div class="nda-section-title">EXPOSICIÓN</div>
+          <div class="nda-text">Las partes tienen interés en explorar una posible relación comercial relacionada con la adquisición y gestión de créditos de carbono certificados bajo estándar Verra VCS+CCB en proyectos ubicados en Paraguay y otros mercados. Con el fin de facilitar dichas negociaciones, <strong>CarbonLand necesita compartir información confidencial y estratégica</strong> con la Parte Receptora. El presente Acuerdo regula las condiciones bajo las cuales dicha información puede ser recibida, usada y protegida.</div>
+
+          <div class="nda-section-title">CLÁUSULA 1 — DEFINICIÓN DE INFORMACIÓN CONFIDENCIAL</div>
+          <div class="nda-text">Se entiende por <strong>"Información Confidencial"</strong> toda aquella información que CarbonLand revele a la Parte Receptora, ya sea de forma oral, escrita, electrónica o por cualquier otro medio, relacionada con:</div>
+          <ul class="nda-numbered">
+            <li>El modelo de negocio, estructura financiera, proyecciones, márgenes y estrategia de inversión de CarbonLand.</li>
+            <li>Los contratos de offtake, términos comerciales, precios y condiciones negociadas con terceros.</li>
+            <li>Las zonas geográficas de actuación, proyectos de tierra específicos y su valoración.</li>
+            <li>La estructura jurídica y societaria de CarbonLand y sus filiales.</li>
+            <li>Los datos de otros clientes, inversores o socios de CarbonLand.</li>
+            <li>Cualquier información técnica, operativa o estratégica compartida durante las negociaciones.</li>
+            <li>Los documentos, presentaciones, hojas de cálculo y cualquier material compartido electrónicamente.</li>
+          </ul>
+
+          <div class="nda-section-title">CLÁUSULA 2 — OBLIGACIONES DE LA PARTE RECEPTORA</div>
+          <div class="nda-text">La Parte Receptora se compromete a:</div>
+          <ul class="nda-numbered">
+            <li><strong>Mantener estricta confidencialidad</strong> sobre toda la Información Confidencial recibida y no divulgarla a ningún tercero sin el consentimiento previo y por escrito de CarbonLand.</li>
+            <li>Utilizar la Información Confidencial <strong>exclusivamente para evaluar una posible relación comercial</strong> con CarbonLand y no para ningún otro propósito.</li>
+            <li>Proteger la Información Confidencial con el <strong>mismo nivel de cuidado</strong> que aplicaría a su propia información confidencial, y en todo caso con un nivel de diligencia no inferior al razonablemente exigible.</li>
+            <li>No copiar, reproducir, distribuir ni transmitir la Información Confidencial más allá de lo estrictamente necesario para la evaluación interna.</li>
+            <li>Limitar el acceso a la Información Confidencial únicamente a aquellos empleados o asesores que <strong>necesiten conocerla</strong> para la evaluación de la relación comercial, y que estén sujetos a obligaciones de confidencialidad equivalentes.</li>
+            <li>Notificar a CarbonLand de forma <strong>inmediata</strong> si tiene conocimiento de cualquier divulgación no autorizada de la Información Confidencial.</li>
+          </ul>
+
+          <div class="nda-section-title">CLÁUSULA 3 — EXCEPCIONES</div>
+          <div class="nda-text">Las obligaciones de confidencialidad del presente Acuerdo no serán de aplicación respecto a información que:</div>
+          <ul class="nda-numbered">
+            <li>Sea o se convierta en información de dominio público sin que ello sea atribuible a incumplimiento de la Parte Receptora.</li>
+            <li>Estuviera ya en posesión de la Parte Receptora con anterioridad a su divulgación por parte de CarbonLand.</li>
+            <li>Sea recibida legítimamente de un tercero sin restricciones de confidencialidad.</li>
+            <li>Sea divulgada por exigencia legal, judicial o regulatoria, previa notificación a CarbonLand en la medida en que ello sea legalmente posible.</li>
+          </ul>
+
+          <div class="nda-section-title">CLÁUSULA 4 — DURACIÓN</div>
+          <div class="nda-text">El presente Acuerdo entrará en vigor en la fecha de su aceptación digital y tendrá una <strong>duración de cinco (5) años</strong>. Las obligaciones de confidencialidad se mantendrán vigentes durante todo ese período, independientemente de que las negociaciones comerciales concluyan antes de su vencimiento.</div>
+
+          <div class="nda-section-title">CLÁUSULA 5 — PROPIEDAD DE LA INFORMACIÓN</div>
+          <div class="nda-text">Toda la Información Confidencial compartida por CarbonLand <strong>permanecerá en todo momento como propiedad exclusiva de CarbonLand</strong>. El presente Acuerdo no otorga a la Parte Receptora ningún derecho, licencia ni interés sobre dicha información, ni sobre ninguna propiedad intelectual o industrial de CarbonLand.</div>
+
+          <div class="nda-section-title">CLÁUSULA 6 — DEVOLUCIÓN DE INFORMACIÓN</div>
+          <div class="nda-text">A requerimiento de CarbonLand, o en caso de que las negociaciones concluyan sin acuerdo, la Parte Receptora se compromete a <strong>devolver o destruir de forma segura</strong> toda la Información Confidencial recibida, incluyendo cualquier copia, en un plazo máximo de diez (10) días hábiles desde la solicitud.</div>
+
+          <div class="nda-section-title">CLÁUSULA 7 — INCUMPLIMIENTO Y RESPONSABILIDAD</div>
+          <div class="nda-text">El incumplimiento de las obligaciones establecidas en el presente Acuerdo podrá dar lugar a <strong>responsabilidad civil y, en su caso, penal</strong> de la Parte Receptora. CarbonLand podrá reclamar todos los daños y perjuicios derivados del incumplimiento, incluyendo el lucro cesante y el daño reputacional. La Parte Receptora reconoce que cualquier incumplimiento causaría un <strong>perjuicio irreparable</strong> a CarbonLand, que podría solicitar medidas cautelares inmediatas sin necesidad de prestar fianza.</div>
+
+          <div class="nda-section-title">CLÁUSULA 8 — LEGISLACIÓN APLICABLE Y JURISDICCIÓN</div>
+          <div class="nda-text">El presente Acuerdo se rige por la legislación vigente aplicable en función de la jurisdicción acordada por las partes. En caso de controversia, las partes se someten a los tribunales competentes, con renuncia a cualquier otro fuero que pudiera corresponderles. La versión en español del presente documento prevalecerá en caso de discrepancia interpretativa con la versión en inglés.</div>
+
+          <div class="nda-divider"></div>
+
+        </div>
+
+        <!-- ── ENGLISH ── -->
+        <div id="nda-en" style="display:none">
+
+          <div class="nda-section-title">PARTIES TO THE AGREEMENT</div>
+          <div class="nda-parties">
+            <strong>DISCLOSING PARTY:</strong>
+            CARBONLAND PLATFORM S.A. (hereinafter "CarbonLand"), the company owning and operating the CarbonLand carbon credit platform, registered in Paraguay.
+            <br><br>
+            <strong>RECEIVING PARTY:</strong>
+            The company and its representative whose details have been provided in this form (hereinafter "the Receiving Party").
+          </div>
+
+          <div class="nda-section-title">RECITALS</div>
+          <div class="nda-text">The parties wish to explore a potential business relationship related to the acquisition and management of carbon credits certified under the Verra VCS+CCB standard in projects located in Paraguay and other markets. In order to facilitate such negotiations, <strong>CarbonLand needs to share confidential and strategic information</strong> with the Receiving Party. This Agreement governs the terms under which such information may be received, used and protected.</div>
+
+          <div class="nda-section-title">CLAUSE 1 — DEFINITION OF CONFIDENTIAL INFORMATION</div>
+          <div class="nda-text"><strong>"Confidential Information"</strong> means all information disclosed by CarbonLand to the Receiving Party, whether orally, in writing, electronically or by any other means, relating to:</div>
+          <ul class="nda-numbered">
+            <li>CarbonLand's business model, financial structure, projections, margins and investment strategy.</li>
+            <li>Offtake contracts, commercial terms, prices and conditions negotiated with third parties.</li>
+            <li>Geographic areas of operation, specific land projects and their valuation.</li>
+            <li>The legal and corporate structure of CarbonLand and its subsidiaries.</li>
+            <li>Data relating to other clients, investors or partners of CarbonLand.</li>
+            <li>Any technical, operational or strategic information shared during negotiations.</li>
+            <li>Documents, presentations, spreadsheets and any material shared electronically.</li>
+          </ul>
+
+          <div class="nda-section-title">CLAUSE 2 — OBLIGATIONS OF THE RECEIVING PARTY</div>
+          <div class="nda-text">The Receiving Party agrees to:</div>
+          <ul class="nda-numbered">
+            <li><strong>Maintain strict confidentiality</strong> regarding all Confidential Information received and not to disclose it to any third party without the prior written consent of CarbonLand.</li>
+            <li>Use the Confidential Information <strong>solely to evaluate a potential business relationship</strong> with CarbonLand and for no other purpose.</li>
+            <li>Protect the Confidential Information with the <strong>same degree of care</strong> as it applies to its own confidential information, and in any case with no less than a reasonable degree of care.</li>
+            <li>Not copy, reproduce, distribute or transmit the Confidential Information beyond what is strictly necessary for internal evaluation.</li>
+            <li>Restrict access to the Confidential Information only to those employees or advisors who <strong>need to know it</strong> for the evaluation of the commercial relationship, and who are bound by equivalent confidentiality obligations.</li>
+            <li>Notify CarbonLand <strong>immediately</strong> upon becoming aware of any unauthorised disclosure of Confidential Information.</li>
+          </ul>
+
+          <div class="nda-section-title">CLAUSE 3 — EXCEPTIONS</div>
+          <div class="nda-text">The confidentiality obligations under this Agreement shall not apply to information that:</div>
+          <ul class="nda-numbered">
+            <li>Is or becomes publicly available through no breach by the Receiving Party.</li>
+            <li>Was already in the Receiving Party's possession prior to its disclosure by CarbonLand.</li>
+            <li>Is legitimately received from a third party without confidentiality restrictions.</li>
+            <li>Is required to be disclosed by law, court order or regulatory requirement, subject to prior notice to CarbonLand to the extent legally permissible.</li>
+          </ul>
+
+          <div class="nda-section-title">CLAUSE 4 — TERM</div>
+          <div class="nda-text">This Agreement shall enter into force on the date of its digital acceptance and shall remain in effect for a period of <strong>five (5) years</strong>. Confidentiality obligations shall remain in force throughout that period, regardless of whether commercial negotiations conclude before its expiry.</div>
+
+          <div class="nda-section-title">CLAUSE 5 — OWNERSHIP OF INFORMATION</div>
+          <div class="nda-text">All Confidential Information shared by CarbonLand shall <strong>at all times remain the exclusive property of CarbonLand</strong>. This Agreement does not grant the Receiving Party any right, licence or interest in such information, nor in any intellectual or industrial property of CarbonLand.</div>
+
+          <div class="nda-section-title">CLAUSE 6 — RETURN OF INFORMATION</div>
+          <div class="nda-text">At CarbonLand's request, or in the event that negotiations conclude without agreement, the Receiving Party undertakes to <strong>return or securely destroy</strong> all Confidential Information received, including any copies, within a maximum of ten (10) business days from the request.</div>
+
+          <div class="nda-section-title">CLAUSE 7 — BREACH AND LIABILITY</div>
+          <div class="nda-text">Any breach of the obligations set out in this Agreement may give rise to <strong>civil and, where applicable, criminal liability</strong> of the Receiving Party. CarbonLand may claim all damages arising from the breach, including loss of profits and reputational damage. The Receiving Party acknowledges that any breach would cause <strong>irreparable harm</strong> to CarbonLand, which may seek immediate injunctive relief without the need to post a bond.</div>
+
+          <div class="nda-section-title">CLAUSE 8 — GOVERNING LAW AND JURISDICTION</div>
+          <div class="nda-text">This Agreement is governed by the applicable law of the jurisdiction agreed between the parties. In the event of a dispute, the parties submit to the competent courts, waiving any other jurisdiction that may apply to them. The Spanish version of this document shall prevail in the event of any interpretative discrepancy with the English version.</div>
+
+          <div class="nda-divider"></div>
+
+        </div>
+
+        <div class="nda-scroll-hint">↑ Desplázate para leer el documento completo · Scroll to read the full document ↑</div>
+      </div>
+
+      <!-- Read progress -->
+      <div style="padding:.8rem 2.5rem .5rem;background:var(--deep);border-top:1px solid var(--border)">
+        <div class="read-progress"><div class="read-bar" id="read-bar"></div></div>
+        <div class="read-label" id="read-label">0% leído</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goTo(2)">← Volver</button>
+      <button class="btn btn-primary" onclick="goTo(4)">He leído el acuerdo → Proceder a la firma</button>
+    </div>
+  </div>
+
+  <!-- ── PASO 4: FIRMA ── -->
+  <div class="section" id="step4">
+    <div class="form-title">Firma <em>digital</em></div>
+    <p class="form-sub">Confirma los datos y firma el acuerdo de confidencialidad. La aceptación digital tiene plena validez legal.</p>
+
+    <!-- Summary -->
+    <div class="form-group-title">Resumen de los datos proporcionados</div>
+    <div class="summary-card" id="summary-card">
+      <!-- filled by JS -->
+    </div>
+
+    <!-- Signature block -->
+    <div class="sig-block">
+      <div class="sig-title">Firma del acuerdo de confidencialidad · NDA Signature</div>
+
+      <div class="accept-block">
+        <div class="checkbox-row">
+          <input type="checkbox" id="chk1">
+          <label for="chk1">He leído y comprendido en su totalidad el <strong>Acuerdo de Confidencialidad y No Divulgación (NDA)</strong> de CarbonLand en su versión bilingüe español/inglés, y acepto todas sus cláusulas y condiciones.</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="chk2">
+          <label for="chk2">Declaro y garantizo que tengo <strong>poderes suficientes</strong> para vincular a la empresa indicada mediante la firma del presente acuerdo, y que la empresa queda legalmente obligada por el mismo.</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="chk3">
+          <label for="chk3">Acepto que la información compartida por CarbonLand será tratada como <strong>estrictamente confidencial</strong> y no será divulgada a ningún tercero sin autorización previa y escrita de CarbonLand, bajo pena de responsabilidad civil y penal.</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="chk4">
+          <label for="chk4">Acepto la <strong>política de privacidad</strong> de CarbonLand y el tratamiento de mis datos personales y los de la empresa para la gestión de esta solicitud de acceso confidencial.</label>
+        </div>
+      </div>
+
+      <div class="sign-field">
+        <div class="field">
+          <label>Firma digital — Escriba su nombre completo tal como aparece en su DNI/Pasaporte <span>*</span></label>
+          <input type="text" class="sign-name-input" id="firma-nombre"
+            placeholder="Nombre Apellido Apellido"
+            oninput="updateSignDate()">
+          <div class="field-note">Al escribir su nombre completo y marcar todas las casillas, usted firma digitalmente este acuerdo con plena validez legal según la normativa aplicable.</div>
+        </div>
+        <div class="sign-date" id="sign-date-display"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goTo(3)">← Releer el acuerdo</button>
+      <button class="btn btn-primary" id="btn-firmar" onclick="firmar()" disabled>
+        ✍️ Firmar y enviar solicitud de acceso
+      </button>
+    </div>
+  </div>
+
+  <!-- ── ÉXITO ── -->
+  <div class="section" id="step5">
+    <div class="success-block">
+      <span class="success-ico">✅</span>
+      <h2 class="success-title">Acuerdo <em>firmado</em></h2>
+      <p class="success-text">Su acuerdo de confidencialidad ha sido registrado correctamente. El equipo de CarbonLand revisará su solicitud y se pondrá en contacto con usted en un plazo máximo de 48 horas hábiles a través del email corporativo indicado.</p>
+      <div class="summary-card" id="success-summary" style="text-align:left;max-width:480px;margin:2rem auto"></div>
+      <div class="success-ref" id="success-ref"></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ── State ──────────────────────────────────────────────────
+let currentStep = 1;
+const today = new Date();
+const dateStr = today.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+const dateISO = today.toISOString().split('T')[0];
+
+// Set NDA date reference
+document.getElementById('nda-date-ref').textContent = 'Fecha: ' + dateStr;
+
+// ── Navigation ─────────────────────────────────────────────
+function goTo(step) {
+  if (step > currentStep && !validateStep(currentStep)) return;
+
+  document.getElementById('step' + currentStep).classList.remove('active');
+  document.getElementById('step' + step).classList.add('active');
+
+  // Update indicators
+  for (let i = 1; i <= 4; i++) {
+    const circle = document.getElementById('sc' + i);
+    const label  = document.getElementById('sl' + i);
+    if (!circle) continue;
+    circle.classList.remove('active','done');
+    label.classList.remove('active');
+    if (i < step)       { circle.classList.add('done'); circle.textContent = '✓'; }
+    else if (i === step){ circle.classList.add('active'); circle.textContent = i; label.classList.add('active'); }
+    else                { circle.textContent = i; }
+  }
+
+  currentStep = step;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (step === 4) buildSummary();
+}
+
+// ── Validation ─────────────────────────────────────────────
+function validateStep(step) {
+  let ok = true;
+  const rules = {
+    1: ['razon','cif','sector','empleados','direccion','ciudad','cp','pais','emisiones','compromiso'],
+    2: ['nombre','apellidos','dni','cargo','email','telefono','como'],
+  };
+  if (!rules[step]) return true;
+
+  rules[step].forEach(id => {
+    const el = document.getElementById(id);
+    const field = document.getElementById('f-' + id);
+    if (!field) return;
+    const val = el ? el.value.trim() : '';
+    if (!val) {
+      field.classList.add('error'); ok = false;
+    } else {
+      field.classList.remove('error');
+    }
+  });
+
+  if (step === 2) {
+    const chk = document.getElementById('chk-poderes');
+    if (!chk.checked) {
+      alert('Debe confirmar que tiene poderes de representación suficientes.'); ok = false;
+    }
+    const email = document.getElementById('email').value;
+    if (email && !email.includes('@')) {
+      document.getElementById('f-email').classList.add('error'); ok = false;
+    }
+  }
+
+  if (!ok) {
+    document.querySelector('.field.error')?.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return ok;
+}
+
+// Remove error on input
+document.querySelectorAll('input,select,textarea').forEach(el => {
+  el.addEventListener('input', () => {
+    const field = document.getElementById('f-' + el.id);
+    if (field) field.classList.remove('error');
+  });
+});
+
+// ── Language switch ────────────────────────────────────────
+function setLang(lang) {
+  document.getElementById('nda-es').style.display = lang === 'es' ? 'block' : 'none';
+  document.getElementById('nda-en').style.display = lang === 'en' ? 'block' : 'none';
+  document.querySelectorAll('.lang-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && lang==='es') || (i===1 && lang==='en'));
+  });
+}
+
+// ── Read progress ──────────────────────────────────────────
+function updateReadProgress() {
+  const el = document.getElementById('nda-body');
+  const pct = Math.round((el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100);
+  document.getElementById('read-bar').style.width = pct + '%';
+  document.getElementById('read-label').textContent = pct + '% leído · ' + pct + '% read';
+}
+
+// ── Sign date ──────────────────────────────────────────────
+function updateSignDate() {
+  const name = document.getElementById('firma-nombre').value.trim();
+  const all  = ['chk1','chk2','chk3','chk4'].every(id => document.getElementById(id).checked);
+  const btn  = document.getElementById('btn-firmar');
+  if (name.length > 3) {
+    document.getElementById('sign-date-display').textContent =
+      'Firmado digitalmente por: ' + name + ' · Fecha: ' + dateStr;
+  }
+  btn.disabled = !(name.length > 3 && all);
+}
+['chk1','chk2','chk3','chk4'].forEach(id =>
+  document.getElementById(id).addEventListener('change', updateSignDate)
+);
+
+// ── Build summary ──────────────────────────────────────────
+function buildSummary() {
+  const v = id => document.getElementById(id)?.value || '—';
+  const rows = [
+    ['Empresa', v('razon')],
+    ['CIF / Tax ID', v('cif')],
+    ['Sector', v('sector')],
+    ['Tamaño', v('empleados')],
+    ['Dirección fiscal', v('direccion') + ', ' + v('ciudad') + ' ' + v('cp') + ', ' + v('pais')],
+    ['Emisiones estimadas', v('emisiones')],
+    ['Compromiso ESG', v('compromiso')],
+    ['Representante', v('nombre') + ' ' + v('apellidos')],
+    ['Cargo', v('cargo')],
+    ['DNI / Pasaporte', v('dni')],
+    ['Email corporativo', v('email')],
+    ['Teléfono', v('telefono')],
+  ];
+  const html = rows.map(([k,val]) =>
+    `<div class="summary-row"><span>${k}</span><span>${val}</span></div>`
+  ).join('');
+  document.getElementById('summary-card').innerHTML = html;
+}
+
+// ── Sign & submit ──────────────────────────────────────────
+function firmar() {
+  const btn = document.getElementById('btn-firmar');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  // Generate reference
+  const ref = 'CL-NDA-' + dateISO.replace(/-/g,'') + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+
+  // Build success summary
+  const v = id => document.getElementById(id)?.value || '—';
+  const firma = document.getElementById('firma-nombre').value;
+  const rows = [
+    ['Número de referencia', ref],
+    ['Empresa', v('razon')],
+    ['Representante', v('nombre') + ' ' + v('apellidos')],
+    ['Email', v('email')],
+    ['Firmado por', firma],
+    ['Fecha y hora', new Date().toLocaleString('es-ES')],
+  ];
+  const html = rows.map(([k,val]) =>
+    `<div class="summary-row"><span>${k}</span><span>${val}</span></div>`
+  ).join('');
+  document.getElementById('success-summary').innerHTML = html;
+  document.getElementById('success-ref').textContent =
+    'Guarde esta referencia: ' + ref + ' · En breve recibirá confirmación en ' + v('email');
+
+  setTimeout(() => goTo(5), 800);
+}
+</script>
+</body>
+</html>
